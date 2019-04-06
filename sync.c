@@ -16,12 +16,9 @@ static struct task_struct *t5;
 DEFINE_SPINLOCK(lock);
 
 static int counter = 0;
-static int * arr[];
-int arr_size;
 
 static int threadMethod(void *unused) {
     int i = 0;
-    int local_counter = counter;
 
     for (i=0; i<5; i++) {
         counter++;
@@ -30,7 +27,7 @@ static int threadMethod(void *unused) {
         spin_unlock(&lock);
         msleep(100);
     }
-
+  
     return 0;
 }
 
@@ -45,10 +42,7 @@ void createThreads(void) {
 
 int init_module(void)
 {
-    printk(KERN_INFO "START %s\n", TAG);
-    arr = generator();    
-    arr_size = sizeof(arr)/sizeof(arr[0]);
-
+    printk(KERN_INFO "START %s\n", TAG);  
     createThreads();
     return 0;
 }
